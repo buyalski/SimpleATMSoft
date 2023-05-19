@@ -56,21 +56,25 @@ public class DataBase {
         String url = "jdbc:mysql://localhost:3306/atm";
         String user = "root";
         String password = "root";
-        String query = "SELECT balance FROM users WHERE name = '" + name + "'";
+        String query = "SELECT balance FROM users WHERE name = ?";
+
 
         String bal = null;
+        String cur = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
              Statement statement = connection.createStatement()) {
-            statement.executeQuery(query);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
             ResultSet rs = statement.executeQuery(query);
             while (rs.next()) {
                 bal = rs.getString("balance");
+                cur = rs.getString("currency");
             }
 
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return bal;
+        return bal + " " + cur;
     }
 
     public static void setBalance(String name, double value) {
@@ -78,11 +82,27 @@ public class DataBase {
         query(query);
     }
 
-    //public static String getCurrency(String name) {
-    //    String query = "SELECT currency FROM users WHERE name = " + name;
-    //    query(query);
-    //    return query;
-    //}
+    public static String getCurrency(String name) {
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String user = "root";
+        String password = "root";
+        String query = "SELECT currency FROM users WHERE name = ?";
+
+        String cur = null;
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement statement = connection.createStatement()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, name);
+            ResultSet rs = statement.executeQuery(query);
+            while (rs.next()) {
+                cur = rs.getString("currency");
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return cur;
+    }
 
     public static void setCurrency(String name, Currency currency) {
         String query = "UPDATE users SET currency " + currency + " WHERE name = " + name;

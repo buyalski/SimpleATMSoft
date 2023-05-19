@@ -3,8 +3,7 @@ package classes;
 import java.util.Locale;
 import java.util.Scanner;
 
-import static classes.DataBase.DataBase.getBalance;
-import static classes.DataBase.DataBase.setPinCode;
+import static classes.DataBase.DataBase.*;
 
 public class AccountFunctions {
     public static void withdraw(Account account) {
