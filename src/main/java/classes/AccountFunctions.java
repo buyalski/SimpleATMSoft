@@ -52,6 +52,7 @@ public class AccountFunctions {
     }
 
     public static void showBalance(Account account) {
+        System.out.println(account.getAccountName());
         System.out.println("Your account balance: " + getBalance(account.getAccountName()));
     }
 }

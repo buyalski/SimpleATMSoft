@@ -56,7 +56,7 @@ public class DataBase {
         String url = "jdbc:mysql://localhost:3306/atm";
         String user = "root";
         String password = "root";
-        String query = "SELECT balance FROM users WHERE name = " + name;
+        String query = "SELECT balance FROM users WHERE name = '" + name + "'";
 
         String bal = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
@@ -74,7 +74,7 @@ public class DataBase {
     }
 
     public static void setBalance(String name, double value) {
-        String query = "UPDATE users SET balance " + value + " WHERE name = " + name;
+        String query = "UPDATE users SET balance " + value + " WHERE name = '" + name + "'";
         query(query);
     }
 
