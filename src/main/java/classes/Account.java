@@ -3,17 +3,17 @@ package classes;
 public class Account {
     private String accountName;
     private double accountBalance;
-    private String currency;
+    private Currency currency;
     private String pinCode;
 
     public Account() {
         accountName = "Test";
         accountBalance = 0;
-        currency = "USD";
+        currency = Currency.USD;
         pinCode = "1111";
     }
 
-    public Account(String accountName, double accountBalance, String currency, String pinCode) {
+    public Account(String accountName, double accountBalance, Currency currency, String pinCode) {
         this.accountName = accountName;
         this.accountBalance = accountBalance;
         this.currency = currency;
@@ -56,11 +56,11 @@ public class Account {
         this.accountName = accountName;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

@@ -10,7 +10,7 @@ public class AccountFunctionsTest {
 
     @Before
     public void init(){
-        account = new Account("Test", 0, "USD", "1234");
+        account = new Account("Test", 0, Currency.USD, "1234");
     }
     @Test
     public void withdraw() {
