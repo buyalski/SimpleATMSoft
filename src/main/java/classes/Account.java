@@ -1,5 +1,8 @@
 package classes;
 
+import static classes.DataBase.DataBase.query;
+import static classes.DataBase.DataBase.setBalance;
+
 public class Account {
     private String accountName;
     private double accountBalance;
@@ -7,7 +10,7 @@ public class Account {
     private String pinCode;
 
     public Account() {
-        accountName = "Test";
+        accountName = "test";
         accountBalance = 0;
         currency = Currency.USD;
         pinCode = "1111";
@@ -22,7 +25,8 @@ public class Account {
 
     public void withdraw(double amount) {
         if (accountBalance >= amount) {
-            accountBalance -= amount;
+            double newBalance = accountBalance -= amount;
+            setBalance(accountName, newBalance);
         } else {
             System.out.println("You will withdraw " + amount + " " + currency + ", but you have " + accountBalance + " " + currency);
         }

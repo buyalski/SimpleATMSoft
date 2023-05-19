@@ -3,6 +3,9 @@ package classes;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static classes.DataBase.DataBase.getBalance;
+import static classes.DataBase.DataBase.setPinCode;
+
 public class AccountFunctions {
     public static void withdraw(Account account) {
         Scanner sc = new Scanner(System.in);
@@ -28,7 +31,7 @@ public class AccountFunctions {
         }
         System.out.println("Enter new PIN-code:");
         String newPin = sc.next();
-        account.setPinCode(newPin);
+        setPinCode(account.getAccountName(), newPin);
         System.out.println("Your new PIN-code: " + account.getPinCode());
     }
 
@@ -49,6 +52,6 @@ public class AccountFunctions {
     }
 
     public static void showBalance(Account account) {
-        System.out.println("Your account balance: " + String.format("%.2f", account.getAccountBalance()) + " " + account.getCurrency());
+        System.out.println("Your account balance: " + getBalance(account.getAccountName()));
     }
 }
