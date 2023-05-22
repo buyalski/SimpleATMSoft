@@ -56,67 +56,73 @@ public class DataBase {
         String url = "jdbc:mysql://localhost:3306/atm";
         String user = "root";
         String password = "root";
-        String query = "SELECT balance FROM users WHERE name = ?";
-
+        String query = "SELECT balance FROM users WHERE name = '" + name + "'";
 
         String bal = null;
-        String cur = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
-            ResultSet rs = statement.executeQuery(query);
+             Statement Statement = connection.prepareStatement(query)) {
+            ResultSet rs = Statement.executeQuery(query);
             while (rs.next()) {
-                bal = rs.getString("balance");
-                cur = rs.getString("currency");
+                bal = String.valueOf(rs.getDouble("balance"));
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return bal + " " + cur;
+        return bal;
     }
 
     public static void setBalance(String name, double value) {
-        String query = "UPDATE users SET balance " + value + " WHERE name = '" + name + "'";
-        query(query);
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String user = "root";
+        String password = "root";
+        String query = "UPDATE users SET balance = ? WHERE name = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDouble(1, value);
+            preparedStatement.setString(2, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static double getBalanceFromDb(String name) {
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String user = "root";
+        String password = "root";
+        String query = "SELECT balance FROM users WHERE name = '" + name + "'";
+
+        double balance = 0;
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             Statement Statement = connection.prepareStatement(query)) {
+            ResultSet rs = Statement.executeQuery(query);
+            while (rs.next()) {
+                balance = rs.getDouble("balance");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return balance;
     }
 
     public static String getCurrency(String name) {
         String url = "jdbc:mysql://localhost:3306/atm";
         String user = "root";
         String password = "root";
-        String query = "SELECT currency FROM users WHERE name = ?";
+        String query = "SELECT currency FROM users WHERE name = '" + name + "'";
 
         String cur = null;
         try (Connection connection = DriverManager.getConnection(url, user, password);
-             Statement statement = connection.createStatement()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setString(1, name);
-            ResultSet rs = statement.executeQuery(query);
+             Statement Statement = connection.prepareStatement(query)) {
+            ResultSet rs = Statement.executeQuery(query);
             while (rs.next()) {
                 cur = rs.getString("currency");
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return cur;
-    }
-
-    public static void setCurrency(String name, Currency currency) {
-        String query = "UPDATE users SET currency " + currency + " WHERE name = " + name;
-        query(query);
-    }
-
-    public static void getPinCode(String name) {
-        String query = "SELECT pinCode FROM users WHERE name = " + name;
-        query(query);
-    }
-
-    public static void setPinCode(String name, String pinCode) {
-        String query = "UPDATE users SET pinCode " + pinCode + " WHERE name = " + name;
-        query(query);
     }
 
     public static boolean checkUser(String name) {
@@ -163,6 +169,22 @@ public class DataBase {
             ex.printStackTrace();
         }
         return temp;
+    }
+
+    public static void changePinFromDb(String name, String pin){
+        String url = "jdbc:mysql://localhost:3306/atm";
+        String user = "root";
+        String password = "root";
+        String query = "UPDATE users SET pinCode = ? WHERE name = ?";
+
+        try (Connection connection = DriverManager.getConnection(url, user, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, pin);
+            preparedStatement.setString(2, name);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

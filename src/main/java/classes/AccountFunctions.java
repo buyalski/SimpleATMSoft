@@ -18,6 +18,7 @@ public class AccountFunctions {
             sc.nextLine();
         }
         account.withdraw(amount);
+        setBalance(account.getAccountName(), account.getAccountBalance());
     }
 
     public static void changePin(Account account) {
@@ -30,7 +31,8 @@ public class AccountFunctions {
         }
         System.out.println("Enter new PIN-code:");
         String newPin = sc.next();
-        setPinCode(account.getAccountName(), newPin);
+        account.setPinCode(newPin);
+        changePinFromDb(account.getAccountName(), newPin);
         System.out.println("Your new PIN-code: " + account.getPinCode());
     }
 
@@ -48,10 +50,10 @@ public class AccountFunctions {
             }
         }
         account.addAccountBalance(amount);
+        setBalance(account.getAccountName(), account.getAccountBalance());
     }
 
     public static void showBalance(Account account) {
-        System.out.println(account.getAccountName());
-        System.out.println("Your account balance: " + getBalance(account.getAccountName()));
+        System.out.println("Your account balance: " + getBalance(account.getAccountName()) + " " + getCurrency(account.getAccountName()));
     }
 }

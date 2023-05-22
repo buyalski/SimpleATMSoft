@@ -28,7 +28,7 @@ public class Account {
             double newBalance = accountBalance -= amount;
             setBalance(accountName, newBalance);
         } else {
-            System.out.println("You will withdraw " + amount + " " + currency + ", but you have " + accountBalance + " " + currency);
+            System.out.println("You will withdraw " + amount + " " + currency + ", but you have " + accountBalance + " " + currency + ", please retry");
         }
     }
 

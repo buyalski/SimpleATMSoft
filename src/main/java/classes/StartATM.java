@@ -19,13 +19,13 @@ public class StartATM {
                     String name = sc.next();
                     if(checkUser(name)){
                         System.out.println(name + ", enter your PIN-Code:");
-                        String tempPin = null;
-                        tempPin = sc.next();
-                        while (!checkPin(name, tempPin)) {
-                            System.out.println("Enter your PIN-code:");
-                            tempPin = sc.nextLine();
+                        String tempPin = sc.next();
+                        if (!checkPin(name, tempPin)) {
+                            System.out.println("Invalid password");
+                            startATM();
                         }
                         account.setAccountName(name);
+                        account.setAccountBalance(getBalanceFromDb(name));
                         showMenu(account);
                     }
                     else{
